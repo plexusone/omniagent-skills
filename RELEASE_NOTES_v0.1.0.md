@@ -1,0 +1,92 @@
+# Release Notes - v0.1.0
+
+**Release Date:** 2026-04-26
+
+## Overview
+
+Initial release of omniagent-skills, a default skill pack for OmniAgent bundling 18 OpenClaw-compatible markdown skills.
+
+## Installation
+
+```bash
+go get github.com/plexusone/omniagent-skills@v0.1.0
+```
+
+Requires Go 1.24+ and omniskill v0.7.0+.
+
+## Highlights
+
+- **18 OpenClaw skills** embedded via go:embed
+- **Zero runtime dependencies** - skills bundled at compile time
+- **Implements `pack.SkillPack`** interface from omniskill
+
+## Usage
+
+```go
+import (
+    "github.com/plexusone/omniagent/agent"
+    skills "github.com/plexusone/omniagent-skills"
+)
+
+// Use all skills
+agent, err := agent.New(config,
+    agent.WithSkillPack(skills.Default().FS()),
+)
+
+// Or filter to specific skills
+agent, err := agent.New(config,
+    agent.WithSkillPack(skills.Default().FS()),
+    agent.WithSkillIncludes("github", "weather", "tmux"),
+)
+```
+
+## Included Skills
+
+### Core Skills (4)
+
+| Skill | Description | Requirements |
+|-------|-------------|--------------|
+| github | GitHub CLI operations (PRs, issues, CI) | `gh` |
+| tmux | Terminal multiplexer control | `tmux` |
+| weather | Weather information | `curl` |
+| coding-agent | Sub-agent delegation | `claude`/`codex` |
+
+### Utility Skills (10)
+
+| Skill | Description | Requirements |
+|-------|-------------|--------------|
+| notion | Notion API integration | `curl` |
+| slack | Slack messaging | `curl` |
+| trello | Trello boards | `curl` |
+| gh-issues | GitHub issues management | `gh` |
+| summarize | URL/video summarization | `summarize` |
+| openai-whisper-api | Speech-to-text via OpenAI | `curl` |
+| xurl | URL utilities | `curl` |
+| healthcheck | Service monitoring | `curl` |
+| blogwatcher | RSS/blog monitoring | `curl` |
+| gemini | Google Gemini API | `curl` |
+
+### Meta Skills (4)
+
+| Skill | Description | Requirements |
+|-------|-------------|--------------|
+| session-logs | Session history access | None |
+| oracle | Structured queries | None |
+| skill-creator | Create new skills | None |
+| goplaces | Google Places API | `curl` |
+
+## Source
+
+Skills sourced from [OpenClaw](https://github.com/openclaw/openclaw) at commit [`d4eb236`](https://github.com/openclaw/openclaw/commit/d4eb23652362a1b7d3fbcebd633a1c6f2a43c16f).
+
+## Contributors
+
+- John Wang
+- Claude Opus 4.5
+
+## Links
+
+- [GitHub Repository](https://github.com/plexusone/omniagent-skills)
+- [OmniSkill](https://github.com/plexusone/omniskill) - Skill infrastructure
+- [OmniAgent](https://github.com/plexusone/omniagent) - AI agent runtime
+- [OpenClaw](https://github.com/openclaw/openclaw) - Skill source
